@@ -4,6 +4,48 @@ import scoring
 import csv_export
 
 
+GUI_Screen = gui()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 points_refference = {
         "1":8,
         "2":7,
