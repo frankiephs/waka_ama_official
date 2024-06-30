@@ -75,8 +75,10 @@ class file_read_c():
 
 
     @staticmethod
-    def format_content(file_contents):
+    def format_content(file_contents,filename):
         # returns a dictionary of the formatted/categorized version of the contents of the file contents
+
+        
         race_info = file_contents[0]
         subsequent_rows = file_contents[1:-1]
 
@@ -84,9 +86,20 @@ class file_read_c():
 
         # race info
         formatted_race_info = race_info.split(',')
+
+        
+
+        clean_formatted_race_info = []
+
         for i in formatted_race_info:
-            if i == "":
-                formatted_race_info.remove(i or "")
+            if i != "":
+                clean_formatted_race_info.append(i)
+            else:
+                continue
+        formatted_race_info = clean_formatted_race_info
+        
+        
+
         race_number = formatted_race_info[0]
         race_type = formatted_race_info[1]
         race_heat = formatted_race_info[2]
@@ -104,17 +117,26 @@ class file_read_c():
                                 "subsequent_rows_count":subsequent_rows_count}
         
 
+            
+        
+
         # teams
         team_list = []
         for string_team in subsequent_rows:
             formatted_team = string_team.split(',')
             
+            clean_formatted_team = []
+
             for i in formatted_team:
-                if i == "":
-                    formatted_team.remove(i or "")
+                if i != "":
+                    clean_formatted_team.append(i)
                 else:
                     continue
+            formatted_team = clean_formatted_team
+            
                 
+
+            
             # after removing the unneccessary commas
             team_place = formatted_team[0]
             team_id = formatted_team[1]
@@ -133,7 +155,9 @@ class file_read_c():
                                 "difference":team_difference,
                                 "start":team_start}
             team_list.append(team_attributes)
+        
                 
         file_attributes = [race_info_attributes,team_list]
+    
                 
         return file_attributes

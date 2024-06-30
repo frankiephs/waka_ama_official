@@ -5,7 +5,7 @@ class scoring_c():
     def __init__(self):
         pass
 
-    
+    @staticmethod
     def return_scores(formatted_file_contents,points_refference): # file_contents is a list
         # returns the regional association scores
         """
@@ -61,7 +61,7 @@ class scoring_c():
 
 
 
-
+    @staticmethod
     def return_year_sum_score(files_regional_association_score_list ): # {filename:{reg1:100,reg2:200},filename{reg1:100,reg2:200}}
         # returns the total year score e.g. {reg1:500,reg2:600}
 
@@ -77,3 +77,8 @@ class scoring_c():
 
         return sum_scores_dictionary
         
+    @staticmethod
+    def sort_score(regional_association_score_dictionary):
+        # Sorting the dictionary by values in descending order
+        sorted_desc_scores = dict(sorted(regional_association_score_dictionary.items(), key=lambda item: item[1], reverse=True))
+        return sorted_desc_scores
