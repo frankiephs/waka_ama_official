@@ -61,18 +61,19 @@ class file_read_c():
         return files_list
 
     @staticmethod
-    def return_content(filepath,filename):
+    def return_content(filepath):
         # returns dictionary of the contents of a file. Includes its file name and content on a raw form
         """
-        {filename:["1,team,reg","2,team,reg"]}
+        ["1,team,reg","2,team,reg"]
         """
         
         with open(filepath) as file:
-            contents = file.readlines()
-        file_contents = {filename:contents}
-
+            file_contents = file.readlines()
         return file_contents
     
+
+
+
     @staticmethod
     def format_content(file_contents):
         # returns a dictionary of the formatted/categorized version of the contents of the file contents
@@ -133,10 +134,6 @@ class file_read_c():
                                 "start":team_start}
             team_list.append(team_attributes)
                 
-
-        file_attributes = {"race_info":race_info_attributes,
-                                "teams":team_list}
+        file_attributes = [race_info_attributes,team_list]
                 
-    
-        
         return file_attributes

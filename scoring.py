@@ -6,8 +6,8 @@ class scoring_c():
         pass
 
     
-    def return_scores(filename,formatted_file_contents,points_refference): # file_contents is a list
-        # returns the regional association scores with filename
+    def return_scores(formatted_file_contents,points_refference): # file_contents is a list
+        # returns the regional association scores
         """
         {
         "1":8,
@@ -22,16 +22,17 @@ class scoring_c():
 
         }
         """
-        
-        if points_refference.keys()[-1] == ">":
+        last_option = False
+        if list(points_refference.keys())[-1] == ">":
             last_option = True
-            last_option_value = points_refference.values()[-1]
-            points_refference.pop() # removes the 'last option'
+            last_option_value = list(points_refference.values())[-1]
+            points_refference.pop(">") # removes the 'last option'
         
         regional_association_scores = {}
 
-        teams_list = list(formatted_file_contents.values())[1] # gets the teams list
-        last_points_refference = points_refference.keys()[-1]
+        teams_list = formatted_file_contents[1] # gets the teams list
+        last_points_refference = list(points_refference.keys())[-1]
+
         for team_dict in teams_list:
             team_place = team_dict["place"]
             team_regional_association = team_dict["regional_association"]
@@ -49,8 +50,7 @@ class scoring_c():
                     else:
                         regional_association_scores[team_regional_association] = last_option_value
 
-        file_scores = {filename:regional_association_scores}
-        return file_scores
+        return regional_association_scores
         
         
         
@@ -62,6 +62,18 @@ class scoring_c():
 
 
 
-    def return_total_year_score(files_contents_dictionary ): # {filename:{reg1:100,reg2:200},filaname{reg1:100,reg2:200}}
+    def return_year_sum_score(files_regional_association_score_list ): # {filename:{reg1:100,reg2:200},filename{reg1:100,reg2:200}}
         # returns the total year score e.g. {reg1:500,reg2:600}
-        pass
+
+        sum_scores_dictionary = {}
+
+        for scores_dictionary in files_regional_association_score_list: # [{scores_dictionary}]
+            
+            for i in scores_dictionary: # {regionalassoc:1}
+                if i in sum_scores_dictionary: #sumscores{reg} == reg
+                    sum_scores_dictionary[i] += scores_dictionary[i] 
+                else:
+                    sum_scores_dictionary[i] = scores_dictionary[i]
+
+        return sum_scores_dictionary
+        

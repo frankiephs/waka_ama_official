@@ -3,6 +3,19 @@ import gui
 import scoring
 import csv_export
 
+
+points_refference = {
+        "1":8,
+        "2":7,
+        "3":6,
+        "4":5,
+        "5":4,
+        "6":3,
+        "7":2,
+        "8":1,
+        ">":1,
+        }
+
 # get years
 ask_parent_path = input("Type your parent folder >> ")
 parent_path = ask_parent_path
@@ -24,30 +37,21 @@ for file in files_list:
         continue
 print(len(filtered_files_list), ask_keyword, "found")
 
+
+
+
+files_regional_association_score_list = []
+
 # get contents
-filtered_files_contents = []
-for i in filtered_files_list:
-    filepath = f"{target_year_path}/{i}"
-    file_contents = fr.file_read_c.return_content(filepath,i)
-    filtered_files_contents.append(file_contents)
+for filename in filtered_files_list:
+    filepath = f"{target_year_path}/{filename}"
+    file_contents = fr.file_read_c.return_content(filepath)
     
+    # get formatted version
+    formatted_file_contents = fr.file_read_c.format_content(file_contents)
 
+    # get scores
+    file_regional_association_scores = scoring.scoring_c.return_scores(formatted_file_contents,points_refference)
+    files_regional_association_score_list.append(file_regional_association_scores)
 
-# format content
-
-first_race = filtered_files_contents[0]
-
-# NOTE: Dictionaries are not indexed! map it with list function on the keys() function then get the first index
-first_team_filename = list(first_race.keys())[0]
-first_race_value = list(first_race.values())[0]
-
-# print(first_race_value)
-
-formatted_first_team_content = fr.file_read_c.format_content(first_race_value)
-print(formatted_first_team_content)
-
-
-
-
-
-
+print(scoring.scoring_c.return_year_sum_score(files_regional_association_score_list))
