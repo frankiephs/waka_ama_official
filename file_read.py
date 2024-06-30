@@ -61,23 +61,14 @@ class file_read_c():
         return files_list
 
     @staticmethod
-    def return_content(parent_path,year,):
-        # returns dictionary of the contents of a file. Includes year, filename, and file lines. e.g
+    def return_content(filepath,filename):
+        # returns dictionary of the contents of a file. Includes its file name and filepath
         """
-        {year:[
-            {
-            filename:[
-                "1,team1,regassoc1",
-                "2,team2,regassoc2",
-            ]},
-            filename:[
-                "1,team1,regassoc1",
-                "2,team2,regassoc2",
-            ]},
-            filename:[
-                "1,team1,regassoc1",
-                "2,team2,regassoc2",
-            ]},
-        ]}
+        {filename:["1,team,reg","2,team,reg"]}
         """
-        pass
+        
+        with open(filepath) as file:
+            contents = file.readlines()
+        file_contents = {filename:contents}
+
+        return file_contents
