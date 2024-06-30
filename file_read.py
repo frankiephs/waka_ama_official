@@ -74,10 +74,12 @@ class file_read_c():
         return file_contents
     
     @staticmethod
-    def format_content(filename,file_contents):
-        # returns a dictionary of the formatted/categorized version of the contents of the file. Includes file name and teams attributes
+    def format_content(file_contents):
+        # returns a dictionary of the formatted/categorized version of the contents of the file contents
         race_info = file_contents[0]
         subsequent_rows = file_contents[1:-1]
+
+        
 
         # race info
         formatted_race_info = race_info.split(',')
@@ -90,41 +92,51 @@ class file_read_c():
         race_title = formatted_race_info[3]
         race_length = formatted_race_info[4]
         race_start_time = formatted_race_info[5]
+        subsequent_rows_count = len(subsequent_rows)
+
         race_info_attributes = {"number":race_number,
                                 "type":race_type,
                                 "heat":race_heat,
                                 "title":race_title,
                                 "length":race_length,
-                                "start_time":race_start_time,}
+                                "start_time":race_start_time,
+                                "subsequent_rows_count":subsequent_rows_count}
         
 
         # teams
         team_list = []
         for string_team in subsequent_rows:
             formatted_team = string_team.split(',')
+            
             for i in formatted_team:
                 if i == "":
                     formatted_team.remove(i or "")
+                else:
+                    continue
+                
+            # after removing the unneccessary commas
+            team_place = formatted_team[0]
+            team_id = formatted_team[1]
+            team_lane = formatted_team[2]
+            team_name = formatted_team[3]
+            team_regional_association = formatted_team[4]
+            team_elapsed_time = formatted_team[5]
+            team_difference = formatted_team[6]
+            team_start = formatted_team[7]
+            team_attributes = {"place":team_place,
+                                "id":team_id,
+                                "lane":team_lane,
+                                "name":team_name,
+                                "regional_association":team_regional_association,
+                                "elapsed_time":team_elapsed_time,
+                                "difference":team_difference,
+                                "start":team_start}
+            team_list.append(team_attributes)
+                
 
-                    team_place = formatted_team[0]
-                    team_id = formatted_team[1]
-                    team_lane = formatted_team[2]
-                    team_name = formatted_team[3]
-                    team_regional_association = formatted_team[4]
-                    team_elapsed_time = formatted_team[5]
-                    team_difference = formatted_team[6]
-                    team_start = formatted_team[7]
-                    team_attributes = {"place":team_place,
-                                       "id":team_id,
-                                       "lane":team_lane,
-                                       "name":team_name,
-                                       "regional_association":team_regional_association,
-                                       "elapsed_time":team_elapsed_time,
-                                       "difference":team_difference,
-                                       "start":team_start}
-                    team_list.append(team_attributes)
-                    
-        filename_attributes = {filename:
-                               {"race_info":race_info_attributes,
-                                "teams":team_list}}
-        return filename_attributes
+        file_attributes = {"race_info":race_info_attributes,
+                                "teams":team_list}
+                
+    
+        
+        return file_attributes

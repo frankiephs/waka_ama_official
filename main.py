@@ -33,7 +33,20 @@ for i in filtered_files_list:
     
 
 
-# score the files
+# format content
+
+first_race = filtered_files_contents[0]
+
+# NOTE: Dictionaries are not indexed! map it with list function on the keys() function then get the first index
+first_team_filename = list(first_race.keys())[0]
+first_race_value = list(first_race.values())[0]
+
+# print(first_race_value)
+
+formatted_first_team_content = fr.file_read_c.format_content(first_race_value)
+print(formatted_first_team_content)
+
+
 
 
 
